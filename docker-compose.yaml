@@ -24,13 +24,13 @@ services:
       - ./docs/config/grafana/dashboards:/var/lib/grafana/dashboards
 
   exporter:
-    image: pubeldev/prusa_exporter:2.0.0-alpha2
-    #build: .
+    #image: pubeldev/prusa_exporter:2.0.0-alpha2
+    build: .
     container_name: exporter
     restart: unless-stopped
     volumes:
       - type: bind
-        source: ./prusa.yml
+        source: ./docs/config/grafana/prusa.yml
         target: /app/prusa.yml
     ports:
       - "10009:10009"
