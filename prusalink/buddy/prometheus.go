@@ -21,25 +21,25 @@ type Collector struct {
 type MetricName string
 
 const (
-	MetricPrinterTemp               MetricName = "prusa_temperature_celsius"
-	MetricPrinterTempTarget                    = "prusa_temperature_target_celsius"
-	MetricPrinterPrintTimeRemaining            = "prusa_printing_time_remaining_seconds"
-	MetricPrinterPrintProgressRatio            = "prusa_printing_progress_ratio"
-	MetricPrinterFiles                         = "prusa_files_count"
-	MetricPrinterMaterial                      = "prusa_material_info"
-	MetricPrinterPrintTime                     = "prusa_print_time_seconds"
-	MetricPrinterUp                            = "prusa_up"
-	MetricPrinterNozzleSize                    = "prusa_nozzle_size_meters"
-	MetricPrinterStatus                        = "prusa_status_info"
-	MetricPrinterAxis                          = "prusa_axis"
-	MetricPrinterFlow                          = "prusa_print_flow_ratio"
-	MetricPrinterInfo                          = "prusa_info"
-	MetricPrinterMMU                           = "prusa_mmu"
-	MetricPrinterFanSpeedRpm                   = "prusa_fan_speed_rpm"
-	MetricPrinterPrintSpeedRatio               = "prusa_print_speed_ratio"
-	MetricPrinterJobImage                      = "prusa_job_image"
-	MetricPrinterCurrentJob                    = "prusa_job"
-	MetricPrinterUDPMetricsEnabled             = "prusa_udp_metrics_enabled"
+	MetricPrinterTemp                MetricName = "prusa_temperature_celsius"
+	MetricPrinterTempTarget                     = "prusa_temperature_target_celsius"
+	MetricPrinterPrintTimeRemaining             = "prusa_printing_time_remaining_seconds"
+	MetricPrinterPrintProgressRatio             = "prusa_printing_progress_ratio"
+	MetricPrinterFiles                          = "prusa_files_count"
+	MetricPrinterMaterial                       = "prusa_material_info"
+	MetricPrinterPrintTime                      = "prusa_print_time_seconds"
+	MetricPrinterUp                             = "prusa_up"
+	MetricPrinterNozzleSize                     = "prusa_nozzle_size_meters"
+	MetricPrinterStatus                         = "prusa_status_info"
+	MetricPrinterAxis                           = "prusa_axis"
+	MetricPrinterFlow                           = "prusa_print_flow_ratio"
+	MetricPrinterInfo                           = "prusa_info"
+	MetricPrinterMMU                            = "prusa_mmu"
+	MetricPrinterFanSpeedRpm                    = "prusa_fan_speed_rpm"
+	MetricPrinterPrintSpeedRatio                = "prusa_print_speed_ratio"
+	MetricPrinterJobImage                       = "prusa_job_image"
+	MetricPrinterCurrentJob                     = "prusa_job"
+	MetricPrinterUDPMetricsGcodeSent            = "prusa_udp_metrics_gcode_sent"
 )
 
 type metricDesc struct {
@@ -70,7 +70,7 @@ var metrics = []metricDesc{
 // Unlike `metrics`, these ignore common labels.
 var specialMetrics = []metricDesc{
 	{MetricPrinterUp, "Return information about online printers. If printer is registered as offline then returned value is 0.", []string{"printer_address", "printer_model", "printer_name"}},
-	{MetricPrinterUDPMetricsEnabled, "Return information if the UDP metrics were enabled successfully.", []string{"printer_address", "printer_model", "printer_name"}},
+	{MetricPrinterUDPMetricsGcodeSent, "Return information if the UDP metrics gcode was sent successfully.", []string{"printer_address", "printer_model", "printer_name"}},
 
 	{MetricPrinterCurrentJob, "Returns information about the current print job.", []string{"printer_address", "printer_model", "printer_name", "printer_job_name", "printer_job_path"}},
 }
@@ -127,6 +127,12 @@ func (c *Collector) Collect(ch chan<- prometheus.Metric) {
 			log.Debug().Msg("Printer scraping at " + s.Address)
 			printerUp := prometheus.MustNewConstMetric(c.metricDesc[MetricPrinterUp], prometheus.GaugeValue,
 				0, s.Address, s.Type, s.Name)
+
+			udpEnabled := BoolToFloat(s.UDPMetricsEnabled)
+
+			printerUDPEnabled := prometheus.MustNewConstMetric(c.metricDesc[MetricPrinterUDPMetricsGcodeSent], prometheus.GaugeValue,
+				udpEnabled, s.Address, s.Type, s.Name)
+			ch <- printerUDPEnabled
 
 			job, err := GetJob(s)
 			if err != nil {

@@ -197,6 +197,9 @@ func startGcode(filename string, printer config.Printers) ([]byte, error) {
 		return result, err
 	}
 
+	if res.StatusCode != http.StatusNoContent {
+		return nil, fmt.Errorf("failed to start gcode file, status code: %d", res.StatusCode)
+	}
 	result, err = io.ReadAll(res.Body)
 	res.Body.Close()
 
@@ -207,8 +210,8 @@ func startGcode(filename string, printer config.Printers) ([]byte, error) {
 	return result, nil
 }
 
-func EnableUDPmetrics(printers []config.Printers) error {
-	for _, s := range printers {
+func EnableUDPmetrics(printers []config.Printers) {
+	for i, s := range printers {
 
 		log.Debug().Msg("Enabling UDP metrics at " + s.Address)
 
@@ -216,7 +219,7 @@ func EnableUDPmetrics(printers []config.Printers) error {
 
 		if err != nil {
 			log.Error().Msg("Failed to send gcode to " + s.Address + ": " + err.Error())
-			return err
+			continue
 		}
 		log.Debug().Msg("Gcode sent to " + s.Address + ": " + string(send))
 
@@ -224,12 +227,11 @@ func EnableUDPmetrics(printers []config.Printers) error {
 
 		if err != nil {
 			log.Error().Msg("Failed to start gcode at " + s.Address + ": " + err.Error())
-			return err
+			continue
 		}
 		log.Debug().Msg("Gcode started at " + s.Address + ": " + string(start))
 
-		s.UDPMetricsEnabled = true
-		log.Info().Msgf("UDP metrics enabled for printer %s (%s)", s.Name, s.Address)
+		configuration.Printers[i].UDPMetricsEnabled = true
+		log.Info().Msgf("UDP metrics gcode for printer %s (%s) sent and started", s.Name, s.Address)
 	}
-	return nil
 }
