@@ -18,7 +18,7 @@ func TestGetLocalIP(t *testing.T) {
 	// Test case 1: When IP override is set
 	t.Run("WithIPOverride", func(t *testing.T) {
 		configuration = config.Config{}
-		configuration.Exporter.IpOverride = "192.168.1.100"
+		configuration.Exporter.IPOverride = "192.168.1.100"
 
 		ip, err := getLocalIP()
 		if err != nil {
@@ -33,7 +33,7 @@ func TestGetLocalIP(t *testing.T) {
 	// Test case 2: When IP override is empty (should find actual IP)
 	t.Run("WithoutIPOverride", func(t *testing.T) {
 		configuration = config.Config{}
-		configuration.Exporter.IpOverride = ""
+		configuration.Exporter.IPOverride = ""
 
 		ip, err := getLocalIP()
 
@@ -96,7 +96,7 @@ func TestGcodeInit(t *testing.T) {
 		t.Run(tc.name, func(t *testing.T) {
 			// Setup configuration
 			configuration = config.Config{}
-			configuration.Exporter.IpOverride = tc.ipOverride
+			configuration.Exporter.IPOverride = tc.ipOverride
 
 			gcode, err := gcodeInit()
 
@@ -187,7 +187,7 @@ func TestSendGcode(t *testing.T) {
 	// Setup configuration
 	configuration = config.Config{}
 	configuration.Exporter.ScrapeTimeout = 10
-	configuration.Exporter.IpOverride = "10.0.0.1"
+	configuration.Exporter.IPOverride = "10.0.0.1"
 
 	// Extract host from test server URL (remove http://)
 	serverHost := strings.TrimPrefix(testServer.URL, "http://")
@@ -397,7 +397,7 @@ func TestEnableUDPmetrics(t *testing.T) {
 	// Setup configuration
 	configuration = config.Config{}
 	configuration.Exporter.ScrapeTimeout = 10
-	configuration.Exporter.IpOverride = "10.0.0.1"
+	configuration.Exporter.IPOverride = "10.0.0.1"
 
 	// Extract host from test server URL (remove http://)
 	serverHost := strings.TrimPrefix(testServer.URL, "http://")
@@ -494,7 +494,7 @@ func TestErrorCases(t *testing.T) {
 	t.Run("SendGcodeWithInvalidServer", func(t *testing.T) {
 		configuration = config.Config{}
 		configuration.Exporter.ScrapeTimeout = 1 // Short timeout for quick failure
-		configuration.Exporter.IpOverride = "10.0.0.1"
+		configuration.Exporter.IPOverride = "10.0.0.1"
 
 		printer := config.Printers{
 			Address:  "invalid-server:9999",
@@ -551,7 +551,7 @@ func BenchmarkGcodeInit(b *testing.B) {
 
 	// Setup configuration
 	configuration = config.Config{}
-	configuration.Exporter.IpOverride = "10.0.0.1"
+	configuration.Exporter.IPOverride = "10.0.0.1"
 
 	b.ResetTimer()
 	for i := 0; i < b.N; i++ {
@@ -571,7 +571,7 @@ func BenchmarkGetLocalIP(b *testing.B) {
 
 	// Setup configuration with IP override for consistent performance
 	configuration = config.Config{}
-	configuration.Exporter.IpOverride = "192.168.1.100"
+	configuration.Exporter.IPOverride = "192.168.1.100"
 
 	b.ResetTimer()
 	for i := 0; i < b.N; i++ {

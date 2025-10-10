@@ -18,6 +18,7 @@ type Collector struct {
 	commonLabels  []string
 }
 
+// MetricName is a type for metric names
 type MetricName string
 
 const (

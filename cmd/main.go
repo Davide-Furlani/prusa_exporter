@@ -22,7 +22,7 @@ var (
 	metricsPort            = kingpin.Flag("exporter.metrics-port", "Port where to expose metrics.").Default("10009").Int()
 	prusaLinkScrapeTimeout = kingpin.Flag("prusalink.scrape-timeout", "Timeout in seconds to scrape prusalink metrics.").Default("10").Int()
 	logLevel               = kingpin.Flag("log.level", "Log level for zerolog.").Default("info").String()
-	udpIpOverride          = kingpin.Flag("udp.ip-override", "Override the IP address of the server with this value.").Default("").String()
+	udpIPOverride          = kingpin.Flag("udp.ip-override", "Override the IP address of the server with this value.").Default("").String()
 	syslogListenAddress    = kingpin.Flag("udp.listen-address", "Address where to expose port for gathering metrics. - format <address>:<port>").Default("0.0.0.0:8514").String()
 	udpPrefix              = kingpin.Flag("udp.prefix", "Prefix for udp metrics").Default("prusa_").String()
 	udpExtraMetrics        = kingpin.Flag("udp.extra-metrics", "Comma separated list of extra udp metrics to expose.").Default("").String()
@@ -47,7 +47,7 @@ func Run() {
 
 	log.Info().Msg("Loading configuration file: " + *configFile)
 
-	config, err := config.LoadConfig(*configFile, *prusaLinkScrapeTimeout, *udpIpOverride, *udpAllMetrics, *udpExtraMetrics, *lokiPushURL)
+	config, err := config.LoadConfig(*configFile, *prusaLinkScrapeTimeout, *udpIPOverride, *udpAllMetrics, *udpExtraMetrics, *lokiPushURL)
 
 	if err != nil {
 		log.Panic().Msg("Error loading configuration file " + err.Error())

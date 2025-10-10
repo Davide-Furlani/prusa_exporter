@@ -75,8 +75,8 @@ var (
 // getLocalIP finds and returns the first ethernet or WiFi IP address, avoiding Docker interfaces.
 func getLocalIP() (string, error) {
 
-	if configuration.Exporter.IpOverride != "" {
-		return configuration.Exporter.IpOverride, nil
+	if configuration.Exporter.IPOverride != "" {
+		return configuration.Exporter.IPOverride, nil
 	}
 
 	interfaces, err := net.Interfaces()
@@ -313,6 +313,7 @@ func startGcode(filename string, printer config.Printers) ([]byte, error) {
 	return result, nil
 }
 
+// EnableUDPmetrics enables UDP metrics on all printers concurrently
 func EnableUDPmetrics(printers []config.Printers) {
 	var wg sync.WaitGroup
 
