@@ -2610,13 +2610,13 @@
           "type": "prometheus",
           "uid": "${DS_PROMETHEUS}"
         },
-        "definition": "label_values(prusa_info{printer_address=\"192.168.20.73\"},printer_name)",
+        "definition": "label_values(prusa_info{printer_address=\"$printer_address\"},printer_name)",
         "label": "Name",
         "name": "printer_name",
         "options": [],
         "query": {
           "qryType": 1,
-          "query": "label_values(prusa_info{printer_address=\"192.168.20.73\"},printer_name)",
+          "query": "label_values(prusa_info{printer_address=\"$printer_address\"},printer_name)",
           "refId": "PrometheusVariableQueryEditor-VariableQuery"
         },
         "refresh": 1,
@@ -2633,7 +2633,7 @@
   "timezone": "browser",
   "title": "Prusa Mini / Overview",
   "uid": "adkkr69",
-  "version": 47,
+  "version": 48,
   "weekStart": "",
   "id": null
 }
