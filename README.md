@@ -64,7 +64,7 @@ I've prepared cozy [dashboards](docs/), but this being Prometheus, you can do wh
 
 #### Prusa XL
 
-PLACEHOLDER
+![xldashboard](docs/readme/xl_dashboard.png)
 
 #### Prusa XL - fancy version for 5 Tools (BETA and WIP)
 
