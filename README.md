@@ -76,6 +76,10 @@ I've prepared cozy [dashboards](docs/), but this being Prometheus, you can do wh
 ![minidashboard](docs/readme/mini_dashboard.png)
 [Dashboard](docs/Mini.json)
 
+#### General Overview
+![minidashboard](docs/readme/overview_dashboard.png)
+[Dashboard](docs/Overview.json)
+
 # Roadmap
 
 omega2
