@@ -2756,7 +2756,7 @@
         {
           "editorMode": "code",
           "exemplar": false,
-          "expr": "min by (n)(prusa_temp_noz{printer_address=\"192.168.20.114\"})",
+          "expr": "min by (n)(prusa_temp_noz{printer_address=\"$printer_address\"})",
           "instant": true,
           "legendFormat": "{{n}}",
           "range": false,
@@ -4654,7 +4654,7 @@
   "timezone": "browser",
   "title": "Prusa XL - 5Tools / Overview / BETA",
   "uid": "adbs7bf",
-  "version": 50,
+  "version": 52,
   "weekStart": "",
   "id": null
 }
