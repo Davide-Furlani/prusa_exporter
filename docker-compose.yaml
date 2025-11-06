@@ -12,7 +12,8 @@ services:
     container_name: grafana
     restart: unless-stopped
     environment:
-      - GF_INSTALL_PLUGINS=dalvany-image-panel, grafana-xyzchart-panel, grafana-polystat-panel, yesoreyeram-infinity-datasource, volkovlabs-image-panel, betatech-qrcode-panel
+      - GF_PLUGINS_PREINSTALL=dalvany-image-panel, grafana-xyzchart-panel, grafana-polystat-panel, yesoreyeram-infinity-datasource, volkovlabs-image-panel, betatech-qrcode-panel
+      - GF_DASHBOARDS_MIN_REFRESH_INTERVAL=1s
     depends_on:
       - prometheus
     ports:
@@ -25,7 +26,8 @@ services:
       - ./docs/config/grafana/dashboards:/var/lib/grafana/dashboards
 
   exporter:
-    image: pubeldev/prusa_exporter:2.0.0-alpha3
+    #image: pubeldev/prusa_exporter:2.0.0-alpha3
+    build: .
     container_name: exporter
     restart: unless-stopped
     volumes:
@@ -40,7 +42,7 @@ services:
       - "--log.level=info"
       - "--prusalink.scrape-timeout=5"
       - "--udp.ip-override=${HOST_IP}"
-      - "--no-udp.gcode-enabled"
+      - "--udp.gcode-enabled"
       - "--loki.push-url=http://loki:3100/loki/api/v1/push"
     depends_on:
       - prometheus
@@ -48,7 +50,7 @@ services:
       - pubel
  
   prometheus:
-    image: prom/prometheus:v3.6.0
+    image: prom/prometheus:v3.7.2
     container_name: prometheus
     restart: always
     command:
@@ -63,7 +65,7 @@ services:
       - pubel
 
   loki:
-    image: grafana/loki:3.5.5
+    image: grafana/loki:3.5.7
     container_name: loki
     restart: unless-stopped
     command: -config.file=/etc/loki/loki.yaml

@@ -16,6 +16,14 @@ import (
 
 var (
 	listOfMetrics = []string{ // default metrics to enable - contains all metrics for Mini / MK4 / Core One and XL
+		"active_extruder",
+		"bedlet_target",
+		"dwarfs_mcu_temp",
+		"dwarfs_board_temp",
+		"loadcell",
+		"side_fsensor",
+		"fsensor_raw",
+		"adj_z",
 		"temp_ambient",
 		"temp_bed",
 		"temp_brd",
@@ -170,7 +178,7 @@ func gcodeInit() (init string, err error) {
 	}
 
 	// Write the initial lines
-	builder.WriteString(fmt.Sprintf("M330 SYSLOG\nM334 %s 8514", ip))
+	builder.WriteString(fmt.Sprintf("M330 SYSLOG\nM334 %s 8514\nM340 %s 13514", ip, ip))
 
 	if configuration.Exporter.AllMetricsUDP {
 		for _, metric := range allMetricsList {
@@ -318,32 +326,30 @@ func EnableUDPmetrics(printers []config.Printers) {
 	var wg sync.WaitGroup
 
 	for i, s := range printers {
-		wg.Add(1)
-		go func(i int, s config.Printers) {
-			defer wg.Done()
-			log.Debug().Msg("Enabling UDP metrics at " + s.Address)
 
-			send, err := sendGcode("enable_udp_metrics.gcode", s)
+		log.Debug().Msg("Enabling UDP metrics at " + s.Address)
 
-			if err != nil {
-				log.Error().Msg("Failed to send gcode to " + s.Address + ": " + err.Error())
-				configuration.Printers[i].UDPMetricsEnabled = false
-				return
-			}
-			log.Debug().Msg("Gcode sent to " + s.Address + ": " + string(send))
+		send, err := sendGcode("enable_udp_metrics.gcode", s)
 
-			start, err := startGcode("enable_udp_metrics.gcode", s)
+		if err != nil {
+			log.Error().Msg("Failed to send gcode to " + s.Address + ": " + err.Error())
+			configuration.Printers[i].UDPMetricsEnabled = false
+			return
+		}
+		log.Debug().Msg("Gcode sent to " + s.Address + ": " + string(send))
 
-			if err != nil {
-				log.Error().Msg("Failed to start gcode at " + s.Address + ": " + err.Error())
-				configuration.Printers[i].UDPMetricsEnabled = false
-				return
-			}
-			log.Debug().Msg("Gcode started at " + s.Address + ": " + string(start))
+		start, err := startGcode("enable_udp_metrics.gcode", s)
 
-			configuration.Printers[i].UDPMetricsEnabled = true
-			log.Info().Msgf("UDP metrics gcode for printer %s (%s) sent and started", s.Name, s.Address)
-		}(i, s)
+		if err != nil {
+			log.Error().Msg("Failed to start gcode at " + s.Address + ": " + err.Error())
+			configuration.Printers[i].UDPMetricsEnabled = false
+			return
+		}
+		log.Debug().Msg("Gcode started at " + s.Address + ": " + string(start))
+
+		configuration.Printers[i].UDPMetricsEnabled = true
+		log.Info().Msgf("UDP metrics gcode for printer %s (%s) sent and started", s.Name, s.Address)
+
 	}
 	wg.Wait()
 }

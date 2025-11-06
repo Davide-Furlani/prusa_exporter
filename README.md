@@ -52,11 +52,33 @@ M331 eth_in
 - `type` - model of the printer
   - MK3.9 / MK4 / MK4S / XL / Core One ...
 
-### Dashboard
+### Dashboards
 
-Pretty basic but nice and cozy [dashboard](docs/Prusa_Metrics_MK4_C1.json) for TV.
+I've prepared cozy [dashboards](docs/), but this being Prometheus, you can do whatever you want. Fun fact, Mini dashboard works for MKx and Core One and MKx dashboard works for Core One but not vice versa. XL dashboard is specific for XL.
 
-![dashboard](docs/dashboard.png)
+#### Prusa MKx (MK3.5(S) / MK3.9(S) / MK4(S))
+![mkxdashboard](docs/readme/mkx_dashboard.png)
+[Dashboard](docs/MKx.json)
+
+#### Prusa Core One
+![c1dashboard](docs/readme/c1_dashboard.png)
+[Dashboard](docs/C1.json)
+
+#### Prusa XL
+![xldashboard](docs/readme/xl_dashboard.png)
+[Dashboard](docs/XL.json)
+
+#### Prusa XL - fancy version for 5 Tools (BETA and WIP)
+![xl5tbetadashboard](docs/readme/xl5tbeta_dashboard.gif)
+[Dashboard](docs/XL5TBeta.json)
+
+#### Prusa Mini
+![minidashboard](docs/readme/mini_dashboard.png)
+[Dashboard](docs/Mini.json)
+
+#### General Overview
+![minidashboard](docs/readme/overview_dashboard.png)
+[Dashboard](docs/Overview.json)
 
 # Roadmap
 
@@ -87,22 +109,24 @@ alpha3
 - [x] check PrusaLink metrics - done by ([imax9000](https://github.com/imax9000)) 
 
 alpha4
-- [ ] further optimization
-- [x] ~~PoC controlling printer via Grafana~~ - PoC work but it's flawed - scrapping - [prusa_proxy](https://github.com/pubeldev/prusa_proxy)
-- [ ] Mini dashboard
-- [ ] XL dashboard
+- [x] further optimization
+- [x] ~~PoC controlling printer via Grafana~~ - PoC work but it's flawed - scrapping - [prusa_proxy](https://github.com/pubeldev/prusa_proxy) - I've used skeleton in sending metrics gcode
+- [x] Mini dashboard
+- [x] MKx dashboard
+- [x] Core One dashboard
+- [x] XL dashboard
 
 beta1
 - [x] ~~start testing at Raspberry Pi 4 (if not feasible then 5)~~ - not going to build Raspberry Pi image
-- [ ] create tests
-- [ ] reenable tests in pipeline
+- [x] create tests
+- [x] reenable tests in pipeline
 
 beta2
-- [ ] improve stability and optimize code
+- [x] improve stability and optimize code
 - [x] ~~finalize controlling printer via Grafana~~
 
 rc1
-- [ ] create overview dashboard for all printers in system
+- [x] create overview dashboard for all printers in system
 - [ ] further testing
 
 final
@@ -176,6 +200,9 @@ And images for
 
 ### What UDP metrics are enabled by default?
 
+- side_fsensor
+- fsensor_raw
+- adj_z
 - temp_ambient
 - temp_bed
 - temp_brd
@@ -195,6 +222,7 @@ And images for
 - ttemp_noz
 - ttemp_bed
 - chamber_ttemp
+- cur_mmu_imp
 - curr_inp
 - Sandwitch5VCurrent
 - splitter_5V_current
@@ -225,3 +253,6 @@ And images for
 - heap_total
 - fsensor
 - door_sensor
+- fw_version
+- buddy_revision
+- buddy_bom
