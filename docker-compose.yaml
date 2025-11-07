@@ -12,7 +12,7 @@ services:
     container_name: grafana
     restart: unless-stopped
     environment:
-      - GF_PLUGINS_PREINSTALL=volkovlabs-image-panel, betatech-qrcode-panel
+      - GF_PLUGINS_PREINSTALL=volkovlabs-image-panel, betatech-qrcode-panel, grafana-polystat-panel
       - GF_DASHBOARDS_MIN_REFRESH_INTERVAL=1s
     depends_on:
       - prometheus

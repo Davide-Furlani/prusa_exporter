@@ -61,6 +61,7 @@
   "editable": true,
   "fiscalYearStartMonth": 0,
   "graphTooltip": 0,
+  "id": null,
   "links": [],
   "panels": [
     {
@@ -1170,8 +1171,9 @@
     "list": [
       {
         "current": {},
+        "hide": 1,
         "includeAll": false,
-        "name": "datasource",
+        "name": "DS_PROMETHEUS",
         "options": [],
         "query": "prometheus",
         "refresh": 1,
@@ -1187,8 +1189,7 @@
   "timepicker": {},
   "timezone": "",
   "title": "Prusa General Overview",
-  "uid": "ea142901-b66b-4667-9d0a-35ba5863549a",
-  "version": 16,
-  "weekStart": "",
-  "id": null
+  "uid": "adnlbg6",
+  "version": 1,
+  "weekStart": ""
 }
