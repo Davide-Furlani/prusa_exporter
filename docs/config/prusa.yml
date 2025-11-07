@@ -1,36 +1,6 @@
 printers:
-  - address: 192.168.20.73
+  - address: <ip_address_of_printer>
     username: maker
-    password: VBee5NR5AUFTZ7E
-    name: Pidi Mini
-    type: MINI
-  - address: 192.168.20.57
-    username: maker
-    password: FXeum9NvqepB7nd
-    name: Chore C1
-    type: Core One
-  - address: 192.168.20.14
-    username: maker
-    password: oXvWmswMHd2eUbT
-    name: Immaginary MK4S
-    type: MK4S
-  - address: 192.168.20.15
-    username: maker
-    password: 8coRRptLtTExZpS
-    name: Oldie MK4
-    type: MK4
-  - address: 192.168.20.112
-    username: maker
-    password: k6cj6RmJodttiEb
-    name: XLizzie's
-    type: XL
-  - address: 192.168.20.114
-    username: maker
-    password: ozhLHCHFf9aoRr6
-    name: Žernoseky
-    type: XL
-  - address: 192.168.20.70
-    username: maker
-    password: fDmhGkXTM45znU8
-    name: Double Trouble
-    type: XL
+    password: <password>
+    name: <your_printer_name> # it's optional, only showed in Grafana dashboard
+    type: MINI # MK35 / MK35S / MK39 / MK39S / MK4 / MK4S / XL / IX / Core One / Core One L
