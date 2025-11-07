@@ -22,12 +22,12 @@ services:
       - pubel
     volumes:
       - ./docs/config/grafana/provisioning:/etc/grafana/provisioning
+      - ./docs/dashboards:/var/lib/grafana/dashboards
       - grafana_data:/var/lib/grafana
-      - ./docs/config/grafana/dashboards:/var/lib/grafana/dashboards
 
   exporter:
-    image: pubeldev/prusa_exporter:2.0.0-beta2
-    #build: .
+    #image: pubeldev/prusa_exporter:2.0.0-beta2
+    build: .
     container_name: exporter
     restart: unless-stopped
     volumes:
