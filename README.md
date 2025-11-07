@@ -189,8 +189,11 @@ I've prepared cozy [dashboards](docs/), but this being Prometheus, you can do wh
 
 rc1
 - [x] create overview dashboard for all printers in system
-- [ ] Grafana provisioning
-- [ ] further testing
+- [x] Grafana provisioning
+- [x] further testing
+
+rc2
+- [] even more testing
 
 final 2.0.0
 - [ ] 🎉
