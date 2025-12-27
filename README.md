@@ -9,7 +9,7 @@
 </a>
 
 This is a fork, this repo is not the original work. If you land on this project I strongly recommend to go and support the original creator as well as looking for the original repo.
-This fork is for personal sperimenting and will not receive updates mades after the fork itself.
+This fork is for personal sperimenting and will not receive any updates made after the fork itself.
 If you are looking for the newest version go find fhe original repo. 
 
 # Table of Contents
